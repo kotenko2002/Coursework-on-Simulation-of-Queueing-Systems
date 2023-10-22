@@ -1,13 +1,16 @@
+import Elements.Decoder;
 import Elements.Element;
 import Elements.Process;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class Model {
+    private static final DecimalFormat df = new DecimalFormat("0.00");
     private ArrayList<Element> elements;
-    double tNext, tCurrent;
-    int event;
-    public double processorsDelay;
+    private double tNext, tCurrent;
+    private int event;
+    //public double processorsDelay;
 
     public Model(ArrayList<Element> elements) {
         this.elements = elements;
@@ -26,7 +29,7 @@ public class Model {
                 }
             }
 
-            System.out.println("\nНастав час для події в " + elements.get(event).getName() + ", час = " + tNext);
+            System.out.println("\nНастав час для події в " + elements.get(event).getName() + ", час = " + df.format(tNext));
 
             for (Element e : elements) {
                 e.doStatistics(tNext - tCurrent);
@@ -59,13 +62,15 @@ public class Model {
 
         for (Element e : elements) {
             System.out.println(e.getName() + ": {");
-            e.printResult();
+
+            System.out.println("\tкількість: " + e.getQuantity() + ";");
 
             if (e instanceof Process) {
                 Process p = (Process) e;
-                System.out.println("\tсередня довжина черги: " +
-                        p.getMeanQueue() / tCurrent + ";"
-                );
+                System.out.println("\tсередня довжина черги: " + df.format(p.getMeanQueue() / tCurrent) + ";");
+            } else if(e instanceof Decoder) {
+                Decoder d = (Decoder) e;
+                System.out.println("\tвідмови : " + new DecimalFormat("0.00").format(d.getFailurePercentage()) + "%");
             }
             System.out.println("}\n");
         }

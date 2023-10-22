@@ -1,26 +1,33 @@
 package Elements;
 
+import java.util.ArrayDeque;
+import java.util.Queue;
+
 public class Process extends Element {
-    private int queue;
+    private final Queue<Double> queue;
     private double meanQueue;
     private boolean isAvailable;
+    private double packageLifetime;
 
     public Process(double delay, String name) {
+        super(name);
         this.delay = delay;
-        this.name = name;
 
         isAvailable= true;
-        queue = 0;
+        queue = new ArrayDeque<>();
         meanQueue = 0.0;
     }
 
     @Override
-    public void inAct() {
+    public void inAct(double packageLifetime) {
         if (isAvailable) {
             isAvailable = false;
-            tNext = tCurrent + getDelay();
+
+            double processingTime = getDelay();
+            tNext = tCurrent + processingTime;
+            this.packageLifetime = packageLifetime + processingTime;
         } else {
-            setQueue(queue + 1);
+            queue.add(packageLifetime);
         }
     }
     @Override
@@ -29,28 +36,25 @@ public class Process extends Element {
         tNext = Double.MAX_VALUE;
         isAvailable = true;
 
-        if (queue > 0) {
-            setQueue(queue - 1);
+        double processedPackageLifetime = packageLifetime;
+        if (!queue.isEmpty()) {
             isAvailable = false;
-            tNext = tCurrent + getDelay();
+
+            double newPackageLifetime = queue.poll();
+            double processingTime = getDelay();
+
+            tNext = tCurrent + processingTime;
+            this.packageLifetime = newPackageLifetime + processingTime;
         }
 
         if(nextElement != null) {
-            super.getNextElement().inAct();
+            nextElement.inAct(processedPackageLifetime);
         }
     }
 
-    public void setQueue(int queue) {
-        this.queue = queue;
-    }
-
-    @Override
-    public void printInfo() {
-        super.printInfo();
-    }
     @Override
     public void doStatistics(double delta) {
-        this.meanQueue = getMeanQueue() + queue * delta;
+        this.meanQueue = getMeanQueue() + queue.size() * delta;
     }
     public double getMeanQueue() {
         return meanQueue;

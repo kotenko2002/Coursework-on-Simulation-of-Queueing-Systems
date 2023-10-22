@@ -2,19 +2,19 @@ package Elements;
 
 import FunRand.FunRand;
 
-import java.util.Random;
-
 public  class Element {
     protected String name;
     protected double tNext, tCurrent;
     protected double delay, delayMean, delayDeviation;
+    protected int quantity;
     private String distribution;
-    private int quantity;
     protected Element nextElement;
     private static int nextId = 0;
     private int id;
 
-    public Element() {
+    public Element(String name) {
+        this.name = name;
+
         tNext = 0.0;
         tCurrent = tNext;
         nextElement = null;
@@ -35,47 +35,38 @@ public  class Element {
         }
     }
 
-    public void setDistribution(String distribution) {
-        this.distribution = distribution;
-    }
-
-    public void settCurrent(double tCurrent) {
-        this.tCurrent = tCurrent;
-    }
-    public Element getNextElement() {
-        return nextElement;
-    }
-    public void setNextElement(Element nextElement) {
-        this.nextElement = nextElement;
-    }
-    public void inAct() {
+    public void inAct(double packageLifetime) {
     }
     public void outAct(){
         quantity++;
     }
+
+    public void printInfo(){
+        System.out.println(getName() +  ": { кількість: " + quantity + "; tnext: " + tNext + " }");
+    }
+    public void doStatistics(double delta){
+    }
+
     public double gettNext() {
         return tNext;
-    }
-    public void settNext(double tNext) {
-        this.tNext = tNext;
     }
     public int getId() {
         return id;
     }
-    public void setId(int id) {
-        this.id = id;
-    }
-    public void printResult(){
-        System.out.println("\tкількість: " + quantity + ";");
-    }
-    public void printInfo(){
-        System.out.println(getName() +
-                ": { кількість: " + quantity +
-                "; tnext: " + tNext + " }");
-    }
     public String getName() {
         return name;
     }
-    public void doStatistics(double delta){
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setDistribution(String distribution) {
+        this.distribution = distribution;
+    }
+    public void settCurrent(double tCurrent) {
+        this.tCurrent = tCurrent;
+    }
+    public void setNextElement(Element nextElement) {
+        this.nextElement = nextElement;
     }
 }

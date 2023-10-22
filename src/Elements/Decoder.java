@@ -1,12 +1,14 @@
 package Elements;
+import StateStorage.StateStorage;
 
 public class Decoder extends Element {
-    public int failures;
+    private final StateStorage stateStorage;
+    private int failures;
 
-    public Decoder(String name) {
+    public Decoder(String name, StateStorage stateStorage) {
         super(name);
+        this.stateStorage = stateStorage;
         tNext = Double.MAX_VALUE;
-
         failures = 0;
     }
 
@@ -17,6 +19,8 @@ public class Decoder extends Element {
         if(packageLifetime > 10) {
             failures++;
         }
+
+        stateStorage.additionalResources(getFailurePercentage() > 30);
     }
 
     public double getFailurePercentage() {

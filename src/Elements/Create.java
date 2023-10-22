@@ -1,6 +1,9 @@
 package Elements;
+import FunRand.FunRand;
 
 public class Create extends Element {
+    private double delayMean, delayDeviation;
+
     public Create(double delayMean, double delayDeviation, String name) {
         super(name);
         this.delayMean = delayMean;
@@ -10,7 +13,11 @@ public class Create extends Element {
     @Override
     public void outAct() {
         super.outAct();
-        tNext = tCurrent + super.getDelay();
+        tNext = tCurrent + getDelay();
         nextElement.inAct(0.0);
+    }
+
+    private double getDelay() {
+        return FunRand.Norm(delayMean, delayDeviation);
     }
 }

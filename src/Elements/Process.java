@@ -1,17 +1,21 @@
 package Elements;
 
+import FunRand.FunRand;
+import StateStorage.StateStorage;
+
 import java.util.ArrayDeque;
 import java.util.Queue;
 
 public class Process extends Element {
+    private final StateStorage stateStorage;
     private final Queue<Double> queue;
     private double meanQueue;
     private boolean isAvailable;
     private double packageLifetime;
 
-    public Process(double delay, String name) {
+    public Process(String name, StateStorage stateStorage) {
         super(name);
-        this.delay = delay;
+        this.stateStorage = stateStorage;
 
         isAvailable= true;
         queue = new ArrayDeque<>();
@@ -58,5 +62,9 @@ public class Process extends Element {
     }
     public double getMeanQueue() {
         return meanQueue;
+    }
+
+    private double getDelay() {
+        return FunRand.Exp(stateStorage.getProcessorsDelay());
     }
 }

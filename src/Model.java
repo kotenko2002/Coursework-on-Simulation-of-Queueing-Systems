@@ -6,11 +6,10 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class Model {
-    private static final DecimalFormat df = new DecimalFormat("0.00");
+    private final DecimalFormat df = new DecimalFormat("0.00");
     private ArrayList<Element> elements;
     private double tNext, tCurrent;
     private int event;
-    //public double processorsDelay;
 
     public Model(ArrayList<Element> elements) {
         this.elements = elements;

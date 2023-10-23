@@ -17,16 +17,20 @@ public  class Element {
         nextId++;
     }
 
+    public static void resetNextIdField() {
+        nextId = 0;
+    }
+
     public void inAct(double packageLifetime) {
     }
     public void outAct(){
         quantity++;
     }
 
-    public void printInfo(){
+    public void printInfo() {
         System.out.println(getName() +  ": { кількість: " + quantity + "; tnext: " + tNext + " }");
     }
-    public void doStatistics(double delta){
+    public void doStatistics(double delta) {
     }
 
     public double gettNext() {

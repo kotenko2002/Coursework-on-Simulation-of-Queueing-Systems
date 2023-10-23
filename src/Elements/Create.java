@@ -4,7 +4,7 @@ import FunRand.FunRand;
 public class Create extends Element {
     private double delayMean, delayDeviation;
 
-    public Create(double delayMean, double delayDeviation, String name) {
+    public Create(String name, double delayMean, double delayDeviation) {
         super(name);
         this.delayMean = delayMean;
         this.delayDeviation = delayDeviation;

@@ -20,10 +20,13 @@ public class Decoder extends Element {
             failures++;
         }
 
-        stateStorage.additionalResources(getFailurePercentage() > 30);
+        stateStorage.additionalResources(getFailurePercentage() > 30, tCurrent);
     }
 
     public double getFailurePercentage() {
         return (failures / (double)quantity) * 100;
+    }
+    public double getAdditionalResourcesUsageTime() {
+        return stateStorage.getAdditionalResourcesUsageTime();
     }
 }

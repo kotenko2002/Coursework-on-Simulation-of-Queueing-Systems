@@ -70,6 +70,7 @@ public class Model {
             } else if(e instanceof Decoder) {
                 Decoder d = (Decoder) e;
                 System.out.println("\tвідмови : " + new DecimalFormat("0.00").format(d.getFailurePercentage()) + "%");
+                System.out.println("\tчас роботи додаткових ресурсів: " + new DecimalFormat("0.00").format(d.getAdditionalResourcesUsageTime()));
             }
             System.out.println("}\n");
         }

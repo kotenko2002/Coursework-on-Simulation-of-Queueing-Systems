@@ -1,13 +1,13 @@
 package Elements;
-import StateStorage.StateStorage;
+import Storage.AdditionalResourcesStorage;
 
 public class Decoder extends Element {
-    private final StateStorage stateStorage;
+    private final AdditionalResourcesStorage storage;
     private int failures;
 
-    public Decoder(String name, StateStorage stateStorage) {
+    public Decoder(String name, AdditionalResourcesStorage storage) {
         super(name);
-        this.stateStorage = stateStorage;
+        this.storage = storage;
         tNext = Double.MAX_VALUE;
         failures = 0;
     }
@@ -20,13 +20,13 @@ public class Decoder extends Element {
             failures++;
         }
 
-        stateStorage.additionalResources(getFailurePercentage() > 30, tCurrent);
+        storage.additionalResources(getFailurePercentage() > 30, tCurrent);
     }
 
     public double getFailurePercentage() {
         return (failures / (double)quantity) * 100;
     }
     public double getAdditionalResourcesUsageTime() {
-        return stateStorage.getAdditionalResourcesUsageTime();
+        return storage.getUsageTime();
     }
 }

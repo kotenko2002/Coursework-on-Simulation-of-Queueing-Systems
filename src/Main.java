@@ -2,7 +2,7 @@ import Elements.Create;
 import Elements.Decoder;
 import Elements.Element;
 import Elements.Process;
-import StateStorage.StateStorage;
+import Storage.AdditionalResourcesStorage;
 
 import java.util.ArrayList;
 
@@ -14,7 +14,7 @@ public class Main {
     public static void task() {
         Element.resetNextIdField();
 
-        StateStorage storage = new StateStorage(4, 5);
+        AdditionalResourcesStorage storage = new AdditionalResourcesStorage(4, 5);
 
         Create creator = new Create("CREATOR",6,3);
         Process processor1 = new Process("PROCESSOR1", storage);

@@ -1,4 +1,4 @@
-package Storage;
+package Other;
 
 public class AdditionalResourcesStorage {
     private double processorsDelay;
@@ -10,29 +10,23 @@ public class AdditionalResourcesStorage {
         this.minDelay = minDelay;
         this.maxDelay = maxDelay;
 
+        processorsDelay = maxDelay;
+
         totalUsageTime = 0 ;
         activatedTime = null;
     }
 
     public void additionalResources(boolean activate, double tCurrent) {
-        if(activate) {
-            processorsDelay = minDelay;
+        processorsDelay = activate ? minDelay : maxDelay;
 
-            if(activatedTime == null) {
-                activatedTime = tCurrent;
-            }
-        } else  {
-            processorsDelay = maxDelay;
-
-            if(activatedTime != null) {
-                totalUsageTime += (tCurrent - activatedTime);
-            }
-            activatedTime = null;
+        if(activate && activatedTime != null) {
+            totalUsageTime += (tCurrent - activatedTime);
         }
+        activatedTime = activate ? tCurrent : null;
     }
 
     public double getProcessorsDelay() {
-        return  processorsDelay;
+        return processorsDelay;
     }
     public double getUsageTime() {
         return totalUsageTime;

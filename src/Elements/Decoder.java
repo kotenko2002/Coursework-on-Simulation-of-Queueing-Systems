@@ -1,5 +1,6 @@
 package Elements;
-import Storage.AdditionalResourcesStorage;
+import Other.AdditionalResourcesStorage;
+import Other.LanguagePackage;
 
 public class Decoder extends Element {
     private final AdditionalResourcesStorage storage;
@@ -13,10 +14,10 @@ public class Decoder extends Element {
     }
 
     @Override
-    public void inAct(double packageLifetime) {
+    public void inAct(LanguagePackage pack) {
         quantity++;
 
-        if(packageLifetime > 10) {
+        if(pack.getTimeSpentInSystem(tCurrent) > 10) {
             failures++;
         }
 

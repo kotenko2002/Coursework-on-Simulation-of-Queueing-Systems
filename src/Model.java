@@ -28,7 +28,7 @@ public class Model {
                 }
             }
 
-            System.out.println("\nНастав час для події в " + elements.get(event).getName() + ", час = " + df.format(tNext));
+            //System.out.println("\nНастав час для події в " + elements.get(event).getName() + ", час = " + df.format(tNext));
 
             for (Element e : elements) {
                 e.doStatistics(tNext - tCurrent);
@@ -47,7 +47,7 @@ public class Model {
                 }
             }
 
-            printInfo();
+            //printInfo();
         }
         printResult();
     }

@@ -2,7 +2,7 @@ import Elements.Create;
 import Elements.Decoder;
 import Elements.Element;
 import Elements.Process;
-import Storage.AdditionalResourcesStorage;
+import Other.AdditionalResourcesStorage;
 
 import java.util.ArrayList;
 
@@ -28,13 +28,13 @@ public class Main {
         Model model = new Model(new ArrayList<>()
         {
             {
-            add(creator);
-            add(processor1);
-            add(processor2);
-            add(decoder);
+                add(creator);
+                add(processor1);
+                add(processor2);
+                add(decoder);
             }
         });
-        model.simulate(10000);
+        model.simulate(1000);
     }
 
     public void avgTotalActivatedTime() {

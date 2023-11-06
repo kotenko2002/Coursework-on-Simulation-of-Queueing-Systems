@@ -1,5 +1,7 @@
 package Elements;
 
+import Other.LanguagePackage;
+
 public  class Element {
     protected String name;
     protected double tNext, tCurrent;
@@ -21,10 +23,9 @@ public  class Element {
         nextId = 0;
     }
 
-    public void inAct(double packageLifetime) {
+    public void inAct(LanguagePackage pack) {
     }
     public void outAct(){
-        quantity++;
     }
 
     public void printInfo() {

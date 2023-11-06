@@ -1,5 +1,7 @@
 package Elements;
-import FunRand.FunRand;
+import Other.LanguagePackage;
+
+import java.util.Random;
 
 public class Create extends Element {
     private double delayMean, delayDeviation;
@@ -10,14 +12,18 @@ public class Create extends Element {
         this.delayDeviation = delayDeviation;
         tNext = 0.0;
     }
+
     @Override
     public void outAct() {
-        super.outAct();
+        quantity++;
         tNext = tCurrent + getDelay();
-        nextElement.inAct(0.0);
+        nextElement.inAct(new LanguagePackage(tCurrent));
     }
 
     private double getDelay() {
-        return FunRand.Norm(delayMean, delayDeviation);
+        double a = 0;
+        Random r = new Random();
+        while (a <= 0) a = delayMean + delayDeviation * r.nextGaussian();
+        return a;
     }
 }

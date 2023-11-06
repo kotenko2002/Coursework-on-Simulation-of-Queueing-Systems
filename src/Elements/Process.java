@@ -1,17 +1,17 @@
 package Elements;
 
-import FunRand.FunRand;
-import Storage.AdditionalResourcesStorage;
+import Other.AdditionalResourcesStorage;
+import Other.LanguagePackage;
 
 import java.util.ArrayDeque;
 import java.util.Queue;
 
 public class Process extends Element {
     private final AdditionalResourcesStorage storage;
-    private final Queue<Double> queue;
+    private final Queue<LanguagePackage> queue;
     private double meanQueue;
     private boolean isAvailable;
-    private double packageLifetime;
+    private LanguagePackage pack;
 
     public Process(String name, AdditionalResourcesStorage stateStorage) {
         super(name);
@@ -20,39 +20,36 @@ public class Process extends Element {
         isAvailable= true;
         queue = new ArrayDeque<>();
         meanQueue = 0.0;
+        tNext = Double.MAX_VALUE;
     }
 
     @Override
-    public void inAct(double packageLifetime) {
+    public void inAct(LanguagePackage pack) {
         if (isAvailable) {
             isAvailable = false;
 
-            double processingTime = getDelay();
-            tNext = tCurrent + processingTime;
-            this.packageLifetime = packageLifetime + processingTime;
+            this.pack = pack;
+            tNext = tCurrent + getDelay();
         } else {
-            queue.add(packageLifetime);
+            queue.add(pack);
         }
     }
     @Override
     public void outAct() {
-        super.outAct();
-        tNext = Double.MAX_VALUE;
+        quantity++;
         isAvailable = true;
+        LanguagePackage processedPack = pack;
+        tNext = Double.MAX_VALUE;
 
-        double processedPackageLifetime = packageLifetime;
         if (!queue.isEmpty()) {
             isAvailable = false;
 
-            double newPackageLifetime = queue.poll();
-            double processingTime = getDelay();
-
-            tNext = tCurrent + processingTime;
-            this.packageLifetime = newPackageLifetime + processingTime;
+            this.pack = queue.poll();
+            tNext = tCurrent + getDelay();
         }
 
         if(nextElement != null) {
-            nextElement.inAct(processedPackageLifetime);
+            nextElement.inAct(processedPack);
         }
     }
 
@@ -65,6 +62,6 @@ public class Process extends Element {
     }
 
     private double getDelay() {
-        return FunRand.Exp(storage.getProcessorsDelay());
+        return storage.getProcessorsDelay();
     }
 }

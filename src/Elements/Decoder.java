@@ -35,4 +35,7 @@ public class Decoder extends Element {
     public double getAdditionalResourcesUsageTime() {
         return storage.getUsageTime();
     }
+    public int getFailures() {
+        return failures;
+    }
 }

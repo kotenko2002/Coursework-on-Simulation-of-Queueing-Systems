@@ -10,9 +10,11 @@ public class Model {
     private ArrayList<Element> elements;
     private double tNext, tCurrent;
     private int event;
+    private boolean printInfo;
 
-    public Model(ArrayList<Element> elements) {
+    public Model(ArrayList<Element> elements, boolean printInfo) {
         this.elements = elements;
+        this.printInfo = printInfo;
         tNext = 0.0;
         tCurrent = tNext;
         event = 0;
@@ -28,7 +30,9 @@ public class Model {
                 }
             }
 
-            //System.out.println("\nНастав час для події в " + elements.get(event).getName() + ", час = " + df.format(tNext));
+            if(printInfo) {
+                System.out.println("\nНастав час для події в " + elements.get(event).getName() + ", час = " + df.format(tNext));
+            }
 
             for (Element e : elements) {
                 e.doStatistics(tNext - tCurrent);
@@ -47,9 +51,10 @@ public class Model {
                 }
             }
 
-            //printInfo();
+            if(printInfo) printInfo();
         }
-        printResult();
+
+        if(printInfo) printResult();
     }
     public void printInfo() {
         for (Element e : elements) {

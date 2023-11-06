@@ -22,8 +22,8 @@ public class Model {
         while (tCurrent < time) {
             tNext = Double.MAX_VALUE;
             for (Element e : elements) {
-                if (e.gettNext() < tNext) {
-                    tNext = e.gettNext();
+                if (e.getTNext() < tNext) {
+                    tNext = e.getTNext();
                     event = e.getId();
                 }
             }
@@ -42,7 +42,7 @@ public class Model {
 
             elements.get(event).outAct();
             for (Element e : elements) {
-                if (e.gettNext() == tCurrent) {
+                if (e.getTNext() == tCurrent) {
                     e.outAct();
                 }
             }
@@ -63,15 +63,16 @@ public class Model {
             System.out.println(e.getName() + ": {");
 
             System.out.println("\tкількість: " + e.getQuantity() + ";");
-
             if (e instanceof Process) {
                 Process p = (Process) e;
+                System.out.println("\tсереднє навантаження: " + df.format(p.getMeanLoad() / tCurrent) + ";");
                 System.out.println("\tсередня довжина черги: " + df.format(p.getMeanQueue() / tCurrent) + ";");
             } else if(e instanceof Decoder) {
                 Decoder d = (Decoder) e;
-                System.out.println("\tвідмови : " + new DecimalFormat("0.00").format(d.getFailurePercentage()) + "%");
-                System.out.println("\tчас роботи додаткових ресурсів: " + new DecimalFormat("0.00").format(d.getAdditionalResourcesUsageTime()));
+                System.out.println("\tвідмови : " + new DecimalFormat("0.00").format(d.getFailurePercentage()) + "%;");
+                System.out.println("\tчас роботи додаткових ресурсів: " + new DecimalFormat("0.00").format(d.getAdditionalResourcesUsageTime())+ ";");
             }
+
             System.out.println("}\n");
         }
     }

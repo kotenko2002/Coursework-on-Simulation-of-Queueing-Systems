@@ -10,6 +10,7 @@ public class Create extends Element {
         super(name);
         this.delayMean = delayMean;
         this.delayDeviation = delayDeviation;
+
         tNext = 0.0;
     }
 

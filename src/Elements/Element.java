@@ -29,12 +29,12 @@ public  class Element {
     }
 
     public void printInfo() {
-        System.out.println(getName() +  ": { кількість: " + quantity + "; tnext: " + tNext + " }");
+        System.out.println(getName() +  ": { кількість: " + quantity + "; tNext: " + tNext + " }");
     }
     public void doStatistics(double delta) {
     }
 
-    public double gettNext() {
+    public double getTNext() {
         return tNext;
     }
     public int getId() {

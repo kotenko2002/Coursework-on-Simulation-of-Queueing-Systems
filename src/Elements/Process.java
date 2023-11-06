@@ -9,43 +9,41 @@ import java.util.Queue;
 public class Process extends Element {
     private final AdditionalResourcesStorage storage;
     private final Queue<LanguagePackage> queue;
-    private double meanQueue;
-    private boolean isAvailable;
     private LanguagePackage pack;
+    private double meanLoad, meanQueue;
 
     public Process(String name, AdditionalResourcesStorage stateStorage) {
         super(name);
         this.storage = stateStorage;
 
-        isAvailable= true;
         queue = new ArrayDeque<>();
-        meanQueue = 0.0;
+        pack = null;
+        meanLoad = meanQueue = 0.0;
+
         tNext = Double.MAX_VALUE;
     }
 
     @Override
     public void inAct(LanguagePackage pack) {
-        if (isAvailable) {
-            isAvailable = false;
-
+        if (this.pack == null) {
             this.pack = pack;
             tNext = tCurrent + getDelay();
         } else {
             queue.add(pack);
         }
     }
+
     @Override
     public void outAct() {
         quantity++;
-        isAvailable = true;
         LanguagePackage processedPack = pack;
-        tNext = Double.MAX_VALUE;
 
         if (!queue.isEmpty()) {
-            isAvailable = false;
-
             this.pack = queue.poll();
             tNext = tCurrent + getDelay();
+        } else {
+            this.pack = null;
+            tNext = Double.MAX_VALUE;
         }
 
         if(nextElement != null) {
@@ -56,11 +54,18 @@ public class Process extends Element {
     @Override
     public void doStatistics(double delta) {
         this.meanQueue = getMeanQueue() + queue.size() * delta;
+        this.meanLoad = meanLoad + isProcessWorking() * delta;
+    }
+    public double getMeanLoad() {
+        return meanLoad;
     }
     public double getMeanQueue() {
         return meanQueue;
     }
 
+    private int isProcessWorking() {
+        return pack != null ? 1 : 0;
+    }
     private double getDelay() {
         return storage.getProcessorsDelay();
     }

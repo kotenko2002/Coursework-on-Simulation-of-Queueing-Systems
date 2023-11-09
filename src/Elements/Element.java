@@ -2,7 +2,7 @@ package Elements;
 
 import Other.LanguagePackage;
 
-public  class Element {
+public class Element {
     protected String name;
     protected double tNext, tCurrent;
     protected int quantity;

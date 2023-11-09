@@ -62,7 +62,7 @@ public class Model {
         }
     }
     public void printResult() {
-        System.out.println("\n-----------------------РЕЗУЛЬТАТ-----------------------");
+        System.out.println("\n------------------РЕЗУЛЬТАТ------------------");
 
         for (Element e : elements) {
             System.out.println(e.getName() + ": {");

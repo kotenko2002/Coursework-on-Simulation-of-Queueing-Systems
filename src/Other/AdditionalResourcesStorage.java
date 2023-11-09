@@ -1,6 +1,7 @@
 package Other;
 
 public class AdditionalResourcesStorage {
+    public static final double FAILURE_PERCENTAGE_FOR_RESOURCE_ACTIVATION = 30;
     private double processorsDelay;
     private final double minDelay, maxDelay;
     private double totalUsageTime;
@@ -16,7 +17,9 @@ public class AdditionalResourcesStorage {
         activatedTime = null;
     }
 
-    public void additionalResources(boolean activate, double tCurrent) {
+    public void additionalResources(double failurePercentage, double tCurrent) {
+        boolean activate = failurePercentage > FAILURE_PERCENTAGE_FOR_RESOURCE_ACTIVATION;
+
         processorsDelay = activate ? minDelay : maxDelay;
 
         if(activate && activatedTime != null) {

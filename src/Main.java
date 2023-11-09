@@ -11,8 +11,8 @@ public class Main {
     private static final DecimalFormat df = new DecimalFormat("0.00");
 
     public static void main(String[] args) {
-        //runTask(10000);
-        //runTaskInLoop(10000, 1);
+        runTask(10000);
+        //runTaskInLoop(10000, 1000);
     }
 
     public static void runTask(int simulationTime) {

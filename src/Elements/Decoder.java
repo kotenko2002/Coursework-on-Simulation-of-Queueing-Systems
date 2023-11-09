@@ -4,8 +4,6 @@ import Other.LanguagePackage;
 
 public class Decoder extends Element {
     public static final int LANGUAGE_PACKAGE_TIMEOUT = 10;
-    public static final double FAILURE_PERCENTAGE_FOR_RESOURCE_ACTIVATION = 30;
-
     private final AdditionalResourcesStorage storage;
     private int failures;
 
@@ -26,7 +24,7 @@ public class Decoder extends Element {
             failures++;
         }
 
-        storage.additionalResources(getFailurePercentage() > FAILURE_PERCENTAGE_FOR_RESOURCE_ACTIVATION, tCurrent);
+        storage.additionalResources(getFailurePercentage(), tCurrent);
     }
 
     public double getFailurePercentage() {
